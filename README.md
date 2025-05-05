@@ -19,7 +19,7 @@ To determine whether CNN-based deep learning systems can accurately classify mam
   - Benign (with callback)
   - Benign (no callback)
   - Normal
-- Views: MLO )
+- Views: MLO 
 - Format: DICOM to PNG
 
 ## 🧰 Tools & Libraries
