@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Deep Learning Breast Cancer Detection using CNNs
 
 Deep learning-assisted X-ray mammography can improve the accuracy of breast cancer screening, using convolutional neural networks (CNNs) trained on the Digital Database for Screening Mammography (DDSM). It is inspired by a UK NHS initiative launched in early 2025 to explore AI-assisted diagnostics.
@@ -29,3 +30,7 @@ To determine whether CNN-based deep learning systems can accurately classify mam
 - NumPy, Pandas
 - OpenCV / pydicom (for image processing)
 - Matplotlib / Seaborn (for visualization)
+=======
+# deep-learing-breast-cancer-detection
+ Deep Learning assisted X-ray mammography can improve the  accuracy of breast cancer screening by modelling  the  Digital Database for Screening Mammography (DDSM) with convolutional neural networks  (CNNs).
+>>>>>>> 21075b7 (Add Custom Build CNN model)
