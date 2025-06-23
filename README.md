@@ -1,106 +1,175 @@
 # deep-learning-breast-cancer-detection
 
-Deep learning-assisted X-ray mammography can improve the accuracy and consistency of breast cancer screening by modelling the CBIS-DDSM dataset with convolutional neural networks (CNNs).
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 
-## 🧠 Project Objective
+> Convolutional Neural Networks (CNNs) for improving breast cancer screening accuracy on mammogram images from the CBIS-DDSM dataset.
 
-* Build and evaluate CNN models to classify mammogram images into:
+---
 
-  * Malignant
-  * Benign (with callback)
-  * Benign (no callback)
-  * Normal
-* Reduce diagnostic turnaround time and support radiologists in screening workflows.
+## 📋 Table of Contents
 
-## 📂 Repository Structure
+* [🔍 Overview](#-overview)
+* [📂 Project Structure](#-project-structure)
+* [⚙️ Prerequisites](#️-prerequisites)
+* [📥 Dataset Preparation](#-dataset-preparation)
 
-```text
+  * [1. CBIS-DDSM Preprocessing](#1-cbis-ddsm-preprocessing)
+  * [2. Normal Case Resize](#2-normal-case-resize)
+* [🚀 Model Training & Evaluation](#-model-training--evaluation)
+* [📈 Results & Visualizations](#-results--visualizations)
+* [🤝 Contributing](#-contributing)
+* [📄 License](#-license)
+
+---
+
+## 🔍 Overview
+
+Early and accurate detection of breast cancer can save lives. This project implements CNN-based classifiers to categorize mammogram images into four classes:
+
+1. **Malignant**
+2. **Benign (with callback)**
+3. **Benign (no callback)**
+4. **Normal**
+
+We leverage the publicly available CBIS‑DDSM dataset (Digital Database for Screening Mammography) and integrate MIAS normal cases for balanced training.
+
+---
+
+## 📂 Project Structure
+
+```
 deep-learning-breast-cancer-detection/
-├── Pre_Process_DDSM_Images/         # Scripts & notebooks to convert CBIS-DDSM DICOM → PNG and organize per class
-│   ├── Pre_Process_DDSM_Images.ipynb
-│   └── utils.py                     # Helper functions for DICOM loading and metadata parsing
-├── Normal_Case_Preprocess/          # Prepare and resize normal MIAS/CBIS images for training
-│   ├── Normal_Case_Preprocess.ipynb
-│   └── config.yaml                  # Paths and resize parameters
-├── Custom_Built_CNNs/               # CNN model definitions, training & evaluation
-│   ├── Custom_Built_CNNs.ipynb      # Model architecture, training loops, and results
-│   └── model.py                     # CNN classes and utilities
-├── requirements.txt                 # Python dependencies
-├── README.md                        # This file
-└── .gitignore
+├── Pre_Process_DDSM_Images/
+│   ├── Pre_Process_DDSM_Images.ipynb    # Notebook: DICOM→PNG conversion, normalization, folder split
+│   └── utils.py                        # DICOM loading & metadata utilities
+├── Normal_Case_Preprocess/
+│   ├── Normal_Case_Preprocess.ipynb    # Notebook: resize & format MIAS normal images
+│   └── config.yaml                     # Source/destination paths, resize dims
+├── Custom_Built_CNNs/
+│   ├── Custom_Built_CNNs.ipynb         # Notebook: CNN architecture, training, metrics
+│   └── model.py                        # build_custom_cnn() & helper classes
+├── requirements.txt                    # Python dependencies
+├── .gitignore                          # Excludes datasets, checkpoints
+├── README.md                           # This file
+└── LICENSE                             # MIT License
 ```
 
-## ⚙️ Environment Setup
+---
 
-1. **Clone the repository**
+## ⚙️ Prerequisites
 
-   ```bash
-   git clone https://github.com/yhlee026/deep-learning-breast-cancer-detection.git
-   cd deep-learning-breast-cancer-detection
-   ```
+* Python 3.10 or above
+* [git](https://git-scm.com/) installed
 
-2. **Install dependencies**
-
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate        # On Windows: venv\Scripts\activate
-   pip install --upgrade pip
-   pip install -r requirements.txt
-   ```
-
-## 🚀 Usage
-
-### 1. Preprocess CBIS-DDSM Images
-
-Navigate to the `Pre_Process_DDSM_Images` folder and run the notebook:
+Install dependencies:
 
 ```bash
-jupyter notebook Pre_Process_DDSM_Images.ipynb
+git clone https://github.com/yhlee026/deep-learing-breast-cancer-detection.git
+cd deep-learing-breast-cancer-detection
+python3 -m venv venv
+source venv/bin/activate     # Windows: venv\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-This step converts DICOM files to PNG, normalizes image sizes, and splits images into class folders.
+---
 
-### 2. Prepare Normal Cases
+## 📥 Dataset Preparation
 
-In `Normal_Case_Preprocess`, run:
+### 1. CBIS‑DDSM Preprocessing
+
+1. Download the CBIS‑DDSM dataset (DICOM format) from [TCIA](https://wiki.cancerimagingarchive.net/display/Public/CBIS-DDSM).
+2. Place raw DICOM files under a local directory, e.g. `data/CBIS-DDSM/`.
+3. Open and run `Pre_Process_DDSM_Images/Pre_Process_DDSM_Images.ipynb`:
+
+   * **Steps:**
+
+     * Parse DICOM headers using `utils.py`.
+     * Convert pixel arrays to PNG.
+     * Normalize image sizes.
+     * Split images into class-labelled folders: `output/ malignant/`, `benign_callback/`, `benign_no_callback/`, `normal/`.
 
 ```bash
-jupyter notebook Normal_Case_Preprocess.ipynb
+jupyter notebook Pre_Process_DDSM_Images/Pre_Process_DDSM_Images.ipynb
 ```
 
-This resizes and formats the normal class images (MIAS) to match CBIS-DDSM dimensions.
+### 2. Normal Case Resize
 
-### 3. Train & Evaluate CNN Models
+CBIS‑DDSM may lack sufficient “normal” samples. We integrate MIAS dataset normals:
 
-Open the `Custom_Built_CNNs` notebook:
+1. Download MIAS images and set `source_dir` in `Normal_Case_Preprocess/config.yaml`.
+2. Run `Normal_Case_Preprocess/Normal_Case_Preprocess.ipynb`:
+
+   * Reads config for paths & target size (default: 244×244).
+   * Copies & resizes images into `output/normal/` to match CBIS dimensions.
 
 ```bash
-jupyter notebook Custom_Built_CNNs.ipynb
+jupyter notebook Normal_Case_Preprocess/Normal_Case_Preprocess.ipynb
 ```
 
-This notebook defines the CNN architecture, trains on the preprocessed dataset, and plots metrics (accuracy, loss, confusion matrix).
+---
 
-You can also import and use the standalone `model.py`:
+## 🚀 Model Training & Evaluation
+
+Notebook `Custom_Built_CNNs/Custom_Built_CNNs.ipynb` orchestrates model design and training:
+
+1. **Data Loading:** Uses Keras `ImageDataGenerator` to load and augment from preprocessed folders.
+2. **Model Definition:** 4-conv-layer CNN in `model.py` with batch norm, pooling, dropout, and a dense-softmax output.
+3. **Training:** Configurable hyperparameters (learning rate, epochs, batch size).
+4. **Metrics & Callbacks:** Tracks accuracy, loss, and saves best weights.
+5. **Evaluation:** Generates classification report, ROC curves, and confusion matrix.
+
+```bash
+jupyter notebook Custom_Built_CNNs/Custom_Built_CNNs.ipynb
+```
+
+Alternatively, import the model class in custom Python scripts:
 
 ```python
-from model import build_custom_cnn
-# ... load data, compile, and fit the model
+from Custom_Built_CNNs.model import build_custom_cnn
+model = build_custom_cnn(input_shape=(244,244,1), num_classes=4)
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+# ... fit & evaluate
 ```
 
-## 📈 Results
+---
 
-After training, review the final cell in `Custom_Built_CNNs.ipynb` for performance metrics and sample predictions.
+## 📈 Results & Visualizations
 
-## ✨ Contributing
+After training, view:
 
-1. Fork the repo
-2. Create a new branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -m "Add feature"`)
-4. Push to your branch (`git push origin feature/YourFeature`)
-5. Open a Pull Request
+* **Accuracy & Loss Curves**: Training vs. validation over epochs
+* **Confusion Matrix**: Class-wise performance
+* **Classification Report**: Precision, recall, F1-score per class
+
+Snapshots and example metrics are available in the final cells of the training notebook.
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch:
+
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Commit your changes:
+
+   ```bash
+   git commit -m "Add awesome feature"
+   ```
+4. Push and open a Pull Request:
+
+   ```bash
+   git push origin feature/YourFeature
+   ```
+
+Please adhere to code style and include tests where applicable.
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
->>>>>>> 21075b7 (Add Custom Build CNN model)
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
