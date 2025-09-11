@@ -1,6 +1,6 @@
 🩺 Deep Learning Breast Cancer Detection
 
-This project explores the use of deep learning with Convolutional Neural Networks (CNNs) to assist in breast cancer screening through X-ray mammography. Inspired by ongoing healthcare initiatives (e.g., UK NHS AI diagnostics trials), the system classifies mammogram images into clinically relevant categories, aiming to enhance diagnostic accuracy and reduce radiologist workload.
+This project explores the use of deep learning with Convolutional Neural Networks (CNNs) to assist in breast cancer screening through X-ray mammography. Inspired by ongoing healthcare initiatives, the system classifies mammogram images into clinically relevant categories, aiming to enhance diagnostic accuracy and reduce radiologist workload.
 
 📌 Project Objectives
 
