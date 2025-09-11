@@ -1,73 +1,137 @@
 🩺 Deep Learning Breast Cancer Detection
 
-This project uses Convolutional Neural Networks (CNNs) to assist in breast cancer screening via X-ray mammography. It classifies mammogram images into four categories: Malignant, Benign (with callback), Benign (no callback), and Normal. The goal is to improve screening accuracy and support radiologists in clinical workflows.
+This project explores the use of deep learning with Convolutional Neural Networks (CNNs) to assist in breast cancer screening through X-ray mammography. Inspired by ongoing healthcare initiatives (e.g., UK NHS AI diagnostics trials), the system classifies mammogram images into clinically relevant categories, aiming to enhance diagnostic accuracy and reduce radiologist workload.
 
-📌 Objectives
+📌 Project Objectives
 
-Train CNNs on the CBIS-DDSM dataset.
+Develop CNN-based models for multi-class classification of mammogram images.
 
-Build a Flask backend API for predictions.
+Evaluate performance across categories:
 
-Provide a frontend interface for image upload & results.
+Malignant
 
-Evaluate performance with accuracy, precision, recall, F1-score, and ROC-AUC.
+Benign (with callback)
+
+Benign (no callback)
+
+Normal
+
+Provide an intuitive web application with backend inference (Flask) and frontend visualization.
+
+Contribute to research on AI-assisted screening for earlier and more accurate detection.
 
 📂 Dataset
 
-CBIS-DDSM (Digital Database for Screening Mammography).
+Digital Database for Screening Mammography (CBIS-DDSM)
 
-Images: DICOM → PNG, resized to 244×244, normalized, and augmented.
+Contains annotated mammogram images with pathology-confirmed labels.
 
-⚠️ Dataset not included here — download from the official repository
+Views used: Mediolateral oblique (MLO).
+
+Preprocessing includes:
+
+DICOM → PNG conversion with VOI LUT
+
+Resizing to 244×244
+
+Normalization and data augmentation (rotation, flipping, zooming)
+
+Class balancing for fair model training
+
+⚠️ Dataset not included due to licensing. Please obtain from CBIS-DDSM repository
 .
 
 🧰 Tech Stack
 
-Python, TensorFlow/Keras
+Languages: Python, JavaScript, HTML/CSS
 
-Flask (backend API)
+Deep Learning Frameworks: TensorFlow / Keras
 
-HTML/JS/Bootstrap (frontend)
+Backend: Flask (REST API for prediction)
 
-SQLite/MySQL (optional for user data)
+Frontend: JavaScript, Bootstrap, EJS (interactive UI)
 
-⚙️ How to Run
-# Clone repo
+Database: SQLite/MySQL (for storing user/session data if enabled)
+
+Tools: Git, VS Code, Jupyter Notebook
+
+⚙️ Installation & Setup
+1. Clone Repository
 git clone https://github.com/yhlee026/deep-learing-breast-cancer-detection.git
 cd deep-learing-breast-cancer-detection
 
-# Setup environment
+2. Create Virtual Environment
 python -m venv venv
-venv\Scripts\activate   # (Windows)
-source venv/bin/activate  # (Mac/Linux)
+# Activate (Windows)
+venv\Scripts\activate
+# Activate (Mac/Linux)
+source venv/bin/activate
 
-# Install dependencies
+3. Install Dependencies
 pip install -r requirements.txt
 
-# Run backend
+4. Run Backend (Flask)
 cd backend
 python app.py
 
 
-Frontend can be opened via frontend/index.html.
+Backend runs on http://127.0.0.1:5000/
+.
+
+5. Run Frontend
+
+Open frontend/index.html in your browser or start your Node/Express server if configured.
 
 🚀 Usage
 
-Upload a mammogram image.
+Upload a mammogram image through the web interface.
 
-Model predicts class & confidence score.
+The system preprocesses the image and runs inference using the trained CNN model.
 
-Results displayed with image preview.
+Results show:
+
+Predicted Class (Normal/Benign/Malignant)
+
+Confidence Score (%)
+
+Image preview for reference
+
+📊 Model Training
+
+Custom CNN Architectures: 3–4 convolutional layers with batch normalization, pooling, and dense softmax outputs.
+
+Transfer Learning: Tested VGG16, ResNet50, MobileNetV2, DenseNet121 for improved feature extraction.
+
+Loss Function: sparse_categorical_crossentropy
+
+Optimizer: Adam
+
+Metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix, ROC-AUC
 
 📈 Results
 
-Accuracy > 85% on validation set.
+Accuracy > 85% on validation dataset (varies by architecture).
 
-MobileNetV2 & DenseNet121 performed best for generalization.
+MobileNetV2 & DenseNet121 showed strongest generalization on multi-class classification.
 
-Challenges remain with class imbalance.
+Confusion matrices revealed class imbalance challenges (e.g., malignant underrepresentation).
+
+🛠️ Future Work
+
+Extend dataset with MIAS and 3D tomosynthesis images.
+
+Improve class imbalance handling with advanced augmentation or GAN synthesis.
+
+Deploy as a Streamlit/Flask web app or on edge devices for clinical testing.
+
+Enhance frontend with medical terminology clarity and mobile responsiveness.
 
 👨‍💻 Author
 
 Yong Hua Lee
-Final Year Computer Science Student, SIM – University of London
+Final Year Computer Science Student, Singapore Institute of Management (SIM) – University of London
+
+📜 License
+
+This project is licensed under the MIT License — see the LICENSE
+ file for details.
