@@ -128,10 +128,8 @@ Enhance frontend with medical terminology clarity and mobile responsiveness.
 
 👨‍💻 Author
 
-Yong Hua Lee
-Final Year Computer Science Student, Singapore Institute of Management (SIM) – University of London
+LEE YONG HUA
+Final Year Computer Science Student,Singapore Institute of Management (SIM) – Goldsmith, University of London
 
-📜 License
 
-This project is licensed under the MIT License — see the LICENSE
- file for details.
+
